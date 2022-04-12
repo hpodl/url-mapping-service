@@ -1,0 +1,23 @@
+<!doctype html>
+<form method=post enctype="multipart/form-data">
+  <div style="text-align: left">
+    <label for="target_url">URL to shorten:</label>
+    <input type="text" name="target_url"><br>
+    <label for="custom_url">Custom URL: {{request.base_url}}</label>
+    <input type="text" name="custom_url"><br>
+    <input type="submit" value="Shorten">
+  </div>
+</form>
+
+
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes style="text-align: left">
+    {% for message in messages %}
+      <p>{{ message }}</p>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% block body %}{% endblock %}
