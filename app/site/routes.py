@@ -19,3 +19,13 @@ def main_page():
                 flask.flash("Custom url is already taken.")
 
         return flask.render_template('site/main_page.html')
+
+@site.route('/<custom_code>')
+def custom_redirect(custom_code):
+    target = URLMapping.query.filter_by(custom_url=custom_code).first().target_url
+    print(target)
+    if target.find("http://") != 0 and target.find("https://") != 0:
+        target = "http://" + target
+    print(target)
+
+    return flask.redirect(target)
