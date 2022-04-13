@@ -22,8 +22,12 @@ def main_page():
 
 @site.route('/<custom_code>')
 def custom_redirect(custom_code):
-    target = URLMapping.query.filter_by(custom_url=custom_code).first().target_url
-    print(target)
+    target = URLMapping.query.filter_by(custom_url=custom_code).first()
+    if not target:
+        flask.flash("Nonexistent custom url.")
+        return flask.render_template('site/main_page.html')
+
+    target = target.target_url
     if target.find("http://") != 0 and target.find("https://") != 0:
         target = "http://" + target
     print(target)
