@@ -30,6 +30,5 @@ def custom_redirect(custom_code):
     target = target.target_url
     if target.find("http://") != 0 and target.find("https://") != 0:
         target = "http://" + target
-    print(target)
 
     return flask.redirect(target)
