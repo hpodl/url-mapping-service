@@ -25,7 +25,7 @@ def custom_redirect(custom_code):
     target = URLMapping.query.filter_by(custom_url=custom_code).first()
     if not target:
         flask.flash("Nonexistent custom url.")
-        return flask.render_template('site/main_page.html')
+        return flask.redirect('/')
 
     target = target.target_url
     if target.find("http://") != 0 and target.find("https://") != 0:
