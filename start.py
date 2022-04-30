@@ -8,8 +8,7 @@ with open("key.txt", "w+") as fh:
     if not app.secret_key:
         key = str(uuid4()).replace('-', '')
         app.secret_key = key
-        
-        fh.truncate(0)
+
         fh.write(key)
 
 
@@ -18,4 +17,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
 
-    app.run(debug=True)
+    app.run(debug=False)
