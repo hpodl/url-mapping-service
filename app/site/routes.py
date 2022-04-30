@@ -1,7 +1,7 @@
 import flask
 
 from . import site
-from ..db_model import db, URLMapping
+from ..db_model import db, URLMapping, User
 
 @site.route('/', methods=['GET', 'POST'])
 def main_page():
@@ -32,3 +32,19 @@ def custom_redirect(custom_code):
         target = "http://" + target
 
     return flask.redirect(target)
+
+
+
+@site.route('/register', methods=['GET', 'POST'])
+def register():
+        if flask.request.method == 'POST':
+            nickname = (flask.request.form.get('nickname'))
+            password = (flask.request.form.get('password'))
+
+            if not User.query.filter_by(name=nickname).first():
+                db.session.add(User(nickname,password))
+                db.session.commit()
+            else:
+                flask.flash("User already exists.")
+
+        return flask.render_template('site/register_page.html')

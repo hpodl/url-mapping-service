@@ -1,0 +1,23 @@
+<!doctype html>
+<form method=post enctype="multipart/form-data">
+  <div style="text-align: left">
+    <label for="Username: "> Username: </label>
+    <input type="text" name="nickname"><br>
+    <label for="Username"> Password: </label>
+    <input type="text" name="password"><br>
+    <input type="submit" value="Register">
+  </div>
+</form>
+
+
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes style="text-align: left">
+    {% for message in messages %}
+      <p>{{ message }}</p>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% block body %}{% endblock %}
