@@ -3,7 +3,7 @@ from os.path import isfile as exists
 
 from app.db import db
 from app import create_app
-from app.login import login_manager
+from app.login.login_manager import login_manager
 
 app = create_app(db, login_manager)
 

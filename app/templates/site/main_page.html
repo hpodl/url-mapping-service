@@ -10,6 +10,11 @@
 </form>
 
 
+{% if current_user.is_authenticated %}
+  Hi {{ current_user.name }}!
+{% endif %}
+
+
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}
