@@ -1,7 +1,7 @@
 from flask import Flask
 
 from app.site.routes import site
-from app.login.routes import login
+from app.login import login
 
 def create_app(db, login_manager):
     app = Flask(__name__)
