@@ -1,9 +1,10 @@
-from app.db_model import db, URLMapping
+from app.db import db
 from app import create_app
 from uuid import uuid4
 from os.path import isfile as exists
+from app.login import login_manager
 
-app = create_app(db)
+app = create_app(db, login_manager)
 
 if exists('key.txt'):
     with open('key.txt', "r") as fh:

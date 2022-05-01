@@ -6,7 +6,8 @@ from os import urandom
 db = SQLAlchemy()
 hash_iterations = 50_000
 
-class User(db.Model):
+
+class UserModel(db.Model):
     __tablename__ = 'user'
     name = db.Column(db.String(20), primary_key=True)
     password_hash = db.Column(db.String(64), nullable=False)

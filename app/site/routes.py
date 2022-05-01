@@ -1,7 +1,7 @@
 import flask
 
 from . import site
-from ..db_model import db, URLMapping, User
+from ..db import db, URLMapping, User
 
 @site.route('/', methods=['GET', 'POST'])
 def main_page():
@@ -20,7 +20,7 @@ def main_page():
 
         return flask.render_template('site/main_page.html')
 
-@site.route('/<custom_code>')
+@site.route('/s/<custom_code>')
 def custom_redirect(custom_code):
     target = URLMapping.query.filter_by(custom_url=custom_code).first()
     if not target:
