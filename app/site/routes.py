@@ -1,5 +1,5 @@
 import flask
-from flask_login import current_user
+from flask_login import current_user, login_required
 
 from . import site
 from ..db import db, URLMapping, User
@@ -23,7 +23,7 @@ def main_page():
             else:
                 flask.flash("Custom url is already taken.")
 
-        return flask.render_template('site/main_page.html')
+        return flask.render_template('site/index.html')
 
 @site.route('/s/<custom_code>')
 def custom_redirect(custom_code):
@@ -52,4 +52,15 @@ def register():
             else:
                 flask.flash("User already exists.")
 
-        return flask.render_template('site/register_page.html')
+        return flask.render_template('site/register.html')
+
+@site.route('/manage', methods=['GET', 'POST'])
+@login_required
+def manage():
+    if flask.request.method == 'POST':
+        if flask.request.form.get('mappingid').isalnum():
+            id = flask.request.form.get('mappingid')   
+            db.session.delete(URLMapping.query.filter_by(custom_url=id).first())
+            db.session.commit()
+            
+    return flask.render_template('site/manage.html')

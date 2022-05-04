@@ -1,0 +1,16 @@
+{% with mappings = current_user.mappings %}
+  {% if mappings %}
+    <ul class=mappings style="text-align: left">
+        {% for mapping in mappings %}
+            <form method=post>
+                <p>{{ mapping.custom_url }} -> {{ mapping.target_url }}
+                    <input type="hidden" name="mappingid", value={{ mapping.custom_url }}>
+                <input type="submit" value="Remove">
+                </p>
+            </form>
+            
+        {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% block body %}{% endblock %}
