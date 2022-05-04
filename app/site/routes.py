@@ -1,4 +1,5 @@
 import flask
+from flask_login import current_user
 
 from . import site
 from ..db import db, URLMapping, User
@@ -13,7 +14,11 @@ def main_page():
             target = (flask.request.form.get('target_url'))
 
             if not URLMapping.query.filter_by(custom_url=custom).first():
-                db.session.add(URLMapping(custom, target))
+                mapping = URLMapping(custom, target)
+                db.session.add(mapping)
+                if current_user and current_user.is_authenticated:
+                    current_user.mappings.append(mapping)
+                
                 db.session.commit()
             else:
                 flask.flash("Custom url is already taken.")
