@@ -25,7 +25,7 @@ def main_page():
 
         return flask.render_template('site/index.html')
 
-@site.route('/s/<custom_code>')
+@site.route('/<custom_code>')
 def custom_redirect(custom_code):
     target = URLMapping.query.filter_by(custom_url=custom_code).first()
     if not target:
@@ -38,21 +38,6 @@ def custom_redirect(custom_code):
 
     return flask.redirect(target)
 
-
-
-@site.route('/register', methods=['GET', 'POST'])
-def register():
-        if flask.request.method == 'POST':
-            nickname = (flask.request.form.get('nickname'))
-            password = (flask.request.form.get('password'))
-
-            if not User.query.filter_by(name=nickname).first():
-                db.session.add(User(nickname,password))
-                db.session.commit()
-            else:
-                flask.flash("User already exists.")
-
-        return flask.render_template('site/register.html')
 
 @site.route('/manage', methods=['GET', 'POST'])
 @login_required
