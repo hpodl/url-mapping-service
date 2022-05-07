@@ -4,7 +4,7 @@ Small app providing a database structure and web service written using flask wit
 
 ```yoursite.example/<custom_string> -> https://www.wikipedia.org/```
 
-Currently has a very basic web ui and lacking input verification.
+Currently has a very basic web ui with lacking input verification.
 
 # Running
 To run the app, just pass the start.py file to the python interpreter. By default the website is hosted at localhost:5000.
