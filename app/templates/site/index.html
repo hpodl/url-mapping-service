@@ -1,28 +1,29 @@
-<!doctype html>
-<form method=post enctype="multipart/form-data">
-  <div style="text-align: left">
-    <label for="target_url">URL to shorten:</label>
-    <input type="text" name="target_url"><br>
-    <label for="custom_url">Custom URL: {{request.host_url}}</label>
-    <input type="text" name="custom_url"><br>
-    <input type="submit" value="Shorten">
-  </div>
-</form>
+{% block content %}
+    <h1>Map your URL</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.target_url.label }}<br>
+            {{ form.target_url(size=32) }}
+        </p>
+        <p>
+            {{ form.custom_url.label }}<br>
+            {{ form.custom_url(size=32) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
 
+{% if form.target_url.errors %}
+    <ul class="errors">
+    {% for error in form.target_url.errors %}
+        <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
 
 {% if current_user.is_authenticated %}
   Hi {{ current_user.name }}!
 {% endif %}
 
-
-
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes style="text-align: left">
-    {% for message in messages %}
-      <p>{{ message }}</p>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-{% block body %}{% endblock %}
+</p>

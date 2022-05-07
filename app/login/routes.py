@@ -20,6 +20,7 @@ def register():
 
     return flask.render_template('register.html', form=form)
 
+
 @login.route('/login', methods=['GET', 'POST'])
 def login_page():
     form = LoginForm()

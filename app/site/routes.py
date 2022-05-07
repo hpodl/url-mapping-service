@@ -1,29 +1,30 @@
 import flask
 from flask_login import current_user, login_required
 
+from .forms import MappingRequestForm
 from . import site
-from ..db import db, URLMapping, User
+from ..db import db, URLMapping
 
 @site.route('/', methods=['GET', 'POST'])
 def main_page():
-        custom = None
-        target = None
+    form = MappingRequestForm()
 
+    if form.validate_on_submit():
         if flask.request.method == 'POST':
-            custom = (flask.request.form.get('custom_url'))
-            target = (flask.request.form.get('target_url'))
+            custom = (form.custom_url.data)
+            target = (form.target_url.data)
 
             if not URLMapping.query.filter_by(custom_url=custom).first():
                 mapping = URLMapping(custom, target)
                 db.session.add(mapping)
+
                 if current_user and current_user.is_authenticated:
                     current_user.mappings.append(mapping)
-                
                 db.session.commit()
             else:
-                flask.flash("Custom url is already taken.")
+                form.target_url.errors.append("Custom URL already taken.")
 
-        return flask.render_template('site/index.html')
+    return flask.render_template('site/index.html', form=form)
 
 @site.route('/<custom_code>')
 def custom_redirect(custom_code):
