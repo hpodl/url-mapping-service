@@ -1,16 +1,26 @@
+<h1>{{current_user.name}}'s URLs</h1>
 {% with mappings = current_user.mappings %}
   {% if mappings %}
     <ul class=mappings style="text-align: left">
+      <table style="border: 1px solid;">
+        <tr>
+          <th  style="border: 1px solid;">Target</th>
+          <th style="border: 1px solid;">Custom</th>
+          <th style="border: 1px solid;">Remove</th>
+        </tr>
         {% for mapping in mappings %}
-            <form method=post>
-                <p>{{ mapping.custom_url }} -> {{ mapping.target_url }}
-                    <input type="hidden" name="mappingid", value={{ mapping.custom_url }}>
+          <form method=post>
+            <tr>
+              <td style="border: 1px solid;">{{ mapping.custom_url }}</td>
+              <td style="border: 1px solid;">{{ mapping.target_url }}</td>
+              <td style="border: 1px solid;">
+                <input type="hidden" name="mappingid", value={{ mapping.custom_url }}>
                 <input type="submit" value="Remove">
-                </p>
-            </form>
-            
+              </td>
+            </tr>
+          </form>
         {% endfor %}
-    </ul>
+      </table>
   {% endif %}
 {% endwith %}
 {% block body %}{% endblock %}
