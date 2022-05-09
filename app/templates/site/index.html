@@ -1,29 +1,40 @@
 {% block content %}
     <h1>Map your URL</h1>
+    {% if current_user.is_authenticated %}  <!-- checks if user is not anonymous -->
+        <p>Logged in as '{{ current_user.name }}' </p>
+        <a href="/manage"> 
+            <button>Manage your URLs</button>
+        </a>
+    {% endif %}
+
+    {% if not current_user.is_authenticated %}  <!-- checks if user is not anonymous -->
+        <a href="/register"> 
+            <button>Register</button>
+        </a>
+        
+        <a href="/login"> 
+            <button>Log in</button>
+        </a>
+    {% endif %}
+
+    
     <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
         <p>
-            {{ form.target_url.label }}<br>
+            {{form.csrf_token}}
+            <b>{{ form.target_url.label }}</b><br>
             {{ form.target_url(size=32) }}
         </p>
         <p>
-            {{ form.custom_url.label }}<br>
+            <b>{{ form.custom_url.label }}</b><br>
+            {{request.base_url}}<br>
             {{ form.custom_url(size=32) }}
         </p>
         <p>{{ form.submit() }}</p>
     </form>
 {% endblock %}
 
-{% if form.target_url.errors %}
-    <ul class="errors">
-    {% for error in form.target_url.errors %}
-        <li>{{ error }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
-
-{% if current_user.is_authenticated %}
-  Hi {{ current_user.name }}!
-{% endif %}
-
-</p>
+{% for field, errors in form.errors.items() %}
+<div class="alert alert-error">
+    {{ form[field].label }}: {{ ', '.join(errors) }}
+</div>
+{% endfor %}
