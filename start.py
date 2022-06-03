@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from uuid import uuid4
 from os.path import isfile
 
